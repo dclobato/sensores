@@ -18,6 +18,7 @@ while True:
         response = xbee.wait_read_frame()
         print response
     except KeyboardInterrupt:
+        print 'fechei'
         break
 
 ser.close()
