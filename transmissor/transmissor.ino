@@ -66,10 +66,8 @@ void useInterrupt(boolean v) {
     usingInterrupt = false;
   }
 }
-/////////////////////////////////////////////
 
-
-////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 ///
 ///  SETUP
 ///
@@ -138,18 +136,15 @@ void setup() {
       if (!GPS.parse(GPS.lastNMEA()))
         continue;  // we can fail to parse a sentence in which case we should just wait for another
     }
-    // Nao precisamos mais do GPS. Deixa ele em standby
-    GPS.standby();
-    useInterrupt(false);
 
     getTimeStamp (GPS, timeStamp);
-    createMessage (toSend, 50, "NF", NODEiD, 2, timeStamp, letsWaitMore);
+    createMessage (toSend, 50, "NF", NODEiD, 2, timeStamp, letsWaitMore);   //NotFix
 
     txStatus = sendToNode(radio, destino, toSend);
     
     if (letsWaitMore == 0)
     {
-      createMessage (toSend, 50, "HF", NODEiD, 2, timeStamp, letsWaitMore);
+      createMessage (toSend, 50, "HF", NODEiD, 2, timeStamp, letsWaitMore); //HaltFix
       txStatus = sendToNode(radio, destino, toSend);
 #ifdef DEBUG
       Serial.println(" Nao foi possivel conseguir fix do GPS. Halt!");
@@ -177,10 +172,6 @@ void setup() {
     createMessage (toSend, 50, "SL", NODEiD, 2, timeStamp, "T,H,P");
     txStatus = sendToNode(radio, destino, toSend);
   }
-
-  
-
-  
   // Aguarda por mensagem do coordenador com alguma instrucao de configuracao
   //     especial (mudanca de tempos padrao, de ativacao/desativacao de sensores...)
   // Recebe a lista de sensores a ser utilizada no monitoramento OU se nao chegar nada, usar todos os sensores
