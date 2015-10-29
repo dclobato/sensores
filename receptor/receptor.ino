@@ -2,30 +2,30 @@
 
 #define SOP '<'
 #define EOP '>'
-#define TXpin 8
-#define RXpin 9
+#define TXpin 9
+#define RXpin 8
 
 bool started = false;
 bool ended = false;
 
-SoftwareSerial Console(RXpin, TXpin); //RX, TX
+SoftwareSerial SXbee(RXpin, TXpin); //RX, TX
 
 char inData[80];
 char in;
 byte index;
 
 void setup() {
-  Console.begin(9600);
+  SXbee.begin(9600);
   Serial.begin(9600);
-  Console.println("Configurando serial do XBee...");
-  Console.println("Vamos esperar...");
+  Serial.println("Configurando serial do XBee...");
+  Serial.println("Vamos esperar...");
 }
 
 void loop() {
-  while (Serial.available() > 0)
+  while (SXBee.available() > 0)
   {
-    in = Serial.read();
-    Console.print(in);
+    in = SXbee.read();
+    Serial.print(in);
   }
 /*  while(Xbee.available() > 0)
   {
